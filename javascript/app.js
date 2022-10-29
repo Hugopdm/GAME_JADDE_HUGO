@@ -5,30 +5,31 @@ const app = {
     author: 'Jadde Suarez y Hugo Paniagua',
     description: 'Platform game',
     ctx: undefined,
-    imageInstance: undefined,
+    background: undefined,
+    player: undefined,
+    platforms: [],
+    enemies: [],
+    items: [],
     canvasSize: {
         w: undefined,
         h: undefined
-    },
-    backgroundData: {
-        backgroundSize: { w: 800, h: 1000 },
-        backgroundPos: { x: 0, y: 0 },
-        // image: 'images/road.png'
     },
 
     init() {
         this.setDimensions()
         this.setContext()
-        this.setEventHandlers()
         this.createBackground()
+        this.createPlatforms()
+        this.createItems()
         this.createPlayer()
+        this.player.setEventHandlers()
         this.start()
     },
 
     setDimensions() {
         this.canvasSize = {
             w: 800,
-            h: 1000
+            h: 600
         }
         document.querySelector('canvas').setAttribute('height', this.canvasSize.h)
         document.querySelector('canvas').setAttribute('width', this.canvasSize.w)
@@ -39,46 +40,71 @@ const app = {
     },
 
     createPlayer() {
-        new Player(this.ctx, this.canvasSize)
-    },
-    setEventHandlers() {
-        document.onkeydown = event => {
-            switch (event.key) {
-                case 'ArrowLeft':
-                    this.playerPos.x -= 25
-                    break;
-                case 'a':
-                    this.playerPos.x -= 25
-                    break;
-                case 'ArrowRight':
-                    this.playerPos.x += 25
-                    break;
-                case 'd':
-                    this.playerPos.x += 25
-                    break;
-                case 'ArrowUp':
-                    this.playerPos.y -= 25
-                    break;
-                case 'w':
-                    this.playerPos.y -= 25
-                    break;
-                case 'ArrowDown':
-                    this.playerPos.y += 25
-                    break;
-                case 's':
-                    this.playerPos.y += 25
-                    break;
-            }
-        }
+        this.player = new Player(this.ctx, this.canvasSize)
     },
 
     createBackground() {
-        // this.imageInstance = new Image()
-        // this.imageInstance.src = this.backgroundData.image
-        this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-
+        this.background = new Background(this.ctx, this.canvasSize)
     },
+
+    createPlatforms() {
+        this.platforms.push(
+            new Platforms(this.ctx, this.canvasSize, 0, this.canvasSize.h / 4 - 50, 280, 40), //platform 1 up-left
+            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 380, this.canvasSize.h / 4 + 40, 200, 40), //platform 2 up-right
+            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 130, this.canvasSize.h / 2 + 20, 130, 40), //platform 3 mid
+            new Platforms(this.ctx, this.canvasSize, 0, (this.canvasSize.h / 4) + (this.canvasSize.h / 2), 200, 40), //platform 4 bottom-left
+            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 250, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2), 250, 40) //platform 5 bottom-rigth
+        )
+    },
+
+    createItems() {
+        this.items.push(
+            new Items(this.ctx, this.canvasSize, 25, this.canvasSize.h / 4 - 75), // platform 1 - item 1
+            new Items(this.ctx, this.canvasSize, 120, this.canvasSize.h / 4 - 75), // platform 1 - item 2
+            new Items(this.ctx, this.canvasSize, 225, this.canvasSize.h / 4 - 75), // platform 1 - item 3
+
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 355, this.canvasSize.h / 4 + 15), // platform 2 - item 4
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 230, this.canvasSize.h / 4 + 15), // platform 2 - item 5
+
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 75, this.canvasSize.h / 2 - 5), // platform 3 - item 6
+
+            new Items(this.ctx, this.canvasSize, 50, (this.canvasSize.h / 4) + (this.canvasSize.h / 2) - 25), // platform 4 - item 7
+            new Items(this.ctx, this.canvasSize, 125, (this.canvasSize.h / 4) + (this.canvasSize.h / 2) - 25), // platform 4 - item 8
+
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 200, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2) - 25),// platform 5 - item 9
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 75, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2) - 25)// platform 5 - item 10
+        )
+    },
+
+    checkCollisionPlatforms() {
+        this.platforms.forEach((elem) => {
+            if (
+                this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
+                this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
+                this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
+                this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
+            ) {
+                this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
+                this.player.playerVel.y = 0
+            } else {
+
+            }
+        })
+    },
+    checkCollisionItems() {
+        this.items.forEach((elem) => {
+            if (
+                this.player.playerPos.x < elem.itemPos.x + elem.itemSize.w &&
+                this.player.playerPos.x + this.player.playerSize.w > elem.itemPos.x &&
+                this.player.playerPos.y < elem.itemPos.y + elem.itemSize.h &&
+                this.player.playerSize.h + this.player.playerPos.y > elem.itemPos.y
+            ) {
+                elem.itemPos.x += 1000
+                this.items = this.items.filter(elem => elem.itemPos.x < this.canvasSize.w)
+            }
+        })
+    },
+
     start() {
         setInterval(() => {
             // this.framesCounter++
@@ -89,7 +115,8 @@ const app = {
             this.clearAll()
             // this.moveAll()
             this.drawAll()
-            // this.checkCollision()
+            this.checkCollisionPlatforms()
+            this.checkCollisionItems()
         }, 20)
 
     },
@@ -99,14 +126,14 @@ const app = {
     },
 
     drawAll() {
-        this.createBackground()
-        this.createPlayer()
-        // this.createBackground(
-        //     this.imageInstance,
-        //     this.backgroundData.backgroundPos.x,
-        //     this.backgroundData.backgroundPos.y,
-        //     this.backgroundData.backgroundSize.w,
-        //     this.backgroundData.backgroundSize.h)
+        this.background.drawBackground()
+        this.platforms.forEach((elem) => {
+            elem.drawPlatform()
+        })
+        this.player.drawPlayer()
+        this.items.forEach((elem) => {
+            elem.drawItems()
+        })
     },
 
 }

@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi' crossorigin='anonymous'>
     <link rel="stylesheet" href="styles/style.css" />
     <title>game_name</title>
 </head>
 <body>
-
-    <div class="game-intro">
-      <button id="start-button">StartGame</button>
+  <header class="nav-bar"></header>
+<section class="section container">
+  <div class="row flex-nowrap">
+    <div class="game-intro col d-flex justify-content-around align-items-center">
+      <div></div>
+      <div class="button">
+      <button class="btn btn-danger my-2 p-3 text-uppercase" id="start-button">Start Game</button>
+      </div>
+      <div></div> 
     </div>
 
-    <div id="game-board">
-      <canvas id="canvas" width="800" height="1000"></canvas>
-    </div>
+   <div id="game-board" class="col">
+    <canvas id="canvas" width="800" height="600"></canvas>
+   </div>
+
+    <div class="col"></div>
+  </div>
+</section>
 
     <script src="./javascript/bullets.js"></script>
     <script src="./javascript/items.js"></script>
     <script src="./javascript/platforms.js"></script>
     <script src="./javascript/enemies.js"></script>
     <script src="./javascript/player.js"></script>
+    <script src="./javascript/background.js"></script>
     <script src="./javascript/app.js"></script>
     <script src="./javascript/index.js"></script>
 
