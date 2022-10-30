@@ -1,5 +1,5 @@
 class Enemies {
-    constructor(ctx, canvasSize, enemyPosX, enemyPosY) {
+    constructor(ctx, canvasSize, enemyPosX, enemyPosY, enemyMinPosX, enemyMaxPosX) {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.enemyPos = {
@@ -7,21 +7,30 @@ class Enemies {
             y: enemyPosY
         }
         this.enemySize = {
-            w: 40,
-            h: 40
+            w: 50,
+            h: 50
         }
+        this.enemyVel = 3
+        this.enemyMinPosX = enemyMinPosX
+        this.enemyMaxPosX = enemyMaxPosX
         this.image = new Image()
-        this.image.src = "../images/coin_icon.png"
+        this.image.src = "../images/enemy.png"
         this.init()
     }
     init() {
         this.drawEnemies()
     }
     drawEnemies() {
-        this.ctx.drawImage(this.image, this.enemyPosPos.x, this.enemyPosPos.y, this.enemyPosSize.w, this.enemyPosSize.h)
+        this.ctx.drawImage(this.image, this.enemyPos.x, this.enemyPos.y, this.enemySize.w, this.enemySize.h)
         this.moveEnemies()
     }
     moveEnemies() {
-
+        if (this.enemyPos.x > this.enemyMaxPosX) {
+            this.enemyVel *= -1
+        }
+        if (this.enemyPos.x < this.enemyMinPosX) {
+            this.enemyVel *= -1
+        }
+        this.enemyPos.x += this.enemyVel
     }
 }

@@ -8,8 +8,9 @@ const app = {
     background: undefined,
     player: undefined,
     platforms: [],
-    enemies: [],
     items: [],
+    enemies: [],
+    score: 0,
     canvasSize: {
         w: undefined,
         h: undefined
@@ -21,6 +22,7 @@ const app = {
         this.createBackground()
         this.createPlatforms()
         this.createItems()
+        this.createEnemies()
         this.createPlayer()
         this.player.setEventHandlers()
         this.start()
@@ -49,7 +51,7 @@ const app = {
 
     createPlatforms() {
         this.platforms.push(
-            new Platforms(this.ctx, this.canvasSize, 0, this.canvasSize.h / 4 - 50, 280, 40), //platform 1 up-left
+            new Platforms(this.ctx, this.canvasSize, 0, this.canvasSize.h / 4 - 10, 280, 40), //platform 1 up-left
             new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 380, this.canvasSize.h / 4 + 40, 200, 40), //platform 2 up-right
             new Platforms(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 130, this.canvasSize.h / 2 + 20, 130, 40), //platform 3 mid
             new Platforms(this.ctx, this.canvasSize, 0, (this.canvasSize.h / 4) + (this.canvasSize.h / 2), 200, 40), //platform 4 bottom-left
@@ -59,9 +61,9 @@ const app = {
 
     createItems() {
         this.items.push(
-            new Items(this.ctx, this.canvasSize, 25, this.canvasSize.h / 4 - 75), // platform 1 - item 1
-            new Items(this.ctx, this.canvasSize, 120, this.canvasSize.h / 4 - 75), // platform 1 - item 2
-            new Items(this.ctx, this.canvasSize, 225, this.canvasSize.h / 4 - 75), // platform 1 - item 3
+            new Items(this.ctx, this.canvasSize, 25, this.canvasSize.h / 4 - 35), // platform 1 - item 1
+            new Items(this.ctx, this.canvasSize, 120, this.canvasSize.h / 4 - 35), // platform 1 - item 2
+            new Items(this.ctx, this.canvasSize, 225, this.canvasSize.h / 4 - 35), // platform 1 - item 3
 
             new Items(this.ctx, this.canvasSize, this.canvasSize.w - 355, this.canvasSize.h / 4 + 15), // platform 2 - item 4
             new Items(this.ctx, this.canvasSize, this.canvasSize.w - 230, this.canvasSize.h / 4 + 15), // platform 2 - item 5
@@ -76,6 +78,14 @@ const app = {
         )
     },
 
+    createEnemies() {
+        this.enemies.push(
+            new Enemies(this.ctx, this.canvasSize, 50, 140 - 50, 50, 230), // platform 1 - enemy 1
+            new Enemies(this.ctx, this.canvasSize, 570, 400 - 50, 570, 730), // platform 5 - enemy 2
+            new Enemies(this.ctx, this.canvasSize, 230, this.canvasSize.h - 50, 230, 700) //Floor - enemy 3
+        )
+    },
+
     checkCollisionPlatforms() {
         this.platforms.forEach((elem) => {
             if (
@@ -85,12 +95,15 @@ const app = {
                 this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
             ) {
                 this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
-                this.player.playerVel.y = 0
+                if (this.player.playerVel.y > 0) {
+                    this.player.playerVel.y = 0
+                }
             } else {
 
             }
         })
     },
+
     checkCollisionItems() {
         this.items.forEach((elem) => {
             if (
@@ -101,7 +114,46 @@ const app = {
             ) {
                 elem.itemPos.x += 1000
                 this.items = this.items.filter(elem => elem.itemPos.x < this.canvasSize.w)
+                this.score++
+                // console.log(this.score)
             }
+        })
+    },
+
+    checkCollisionEnemiesPlayers() {
+        this.enemies.forEach((elem) => {
+            if (
+                elem.enemyVel === 0
+            ) {
+
+            } else if (
+                this.player.playerPos.x < elem.enemyPos.x + elem.enemySize.w &&
+                this.player.playerPos.x + this.player.playerSize.w > elem.enemyPos.x &&
+                this.player.playerPos.y < elem.enemyPos.y + elem.enemySize.h &&
+                this.player.playerSize.h + this.player.playerPos.y > elem.enemyPos.y
+            ) {
+                this.gameOver()
+            }
+        })
+    },
+
+    checkCollisionBulletsEnemies() {
+        this.player.bullets.forEach((bullet) => {
+            this.enemies.forEach((enemy) => {
+                if (enemy.enemyVel === 0) { }
+                else if (
+                    bullet.bulletPos.x < enemy.enemyPos.x + enemy.enemySize.w &&
+                    bullet.bulletPos.x + bullet.bulletSize.w > enemy.enemyPos.x &&
+                    bullet.bulletPos.y < enemy.enemyPos.y + enemy.enemySize.h &&
+                    bullet.bulletSize.h + bullet.bulletPos.y > enemy.enemyPos.y
+                ) {
+                    enemy.enemyVel = 0
+                    setTimeout(() => {
+                        enemy.enemyVel = 3
+                    }, 5000)
+                    bullet.bulletPos.x += 1000
+                }
+            })
         })
     },
 
@@ -117,6 +169,9 @@ const app = {
             this.drawAll()
             this.checkCollisionPlatforms()
             this.checkCollisionItems()
+            this.checkCollisionEnemiesPlayers()
+            this.checkCollisionBulletsEnemies()
+            this.winGame()
         }, 20)
 
     },
@@ -130,10 +185,37 @@ const app = {
         this.platforms.forEach((elem) => {
             elem.drawPlatform()
         })
-        this.player.drawPlayer()
         this.items.forEach((elem) => {
             elem.drawItems()
         })
+        this.enemies.forEach((elem) => {
+            elem.drawEnemies()
+        })
+        this.player.drawPlayer()
     },
+
+    winGame() {
+        if (this.score === 10) {
+            clearInterval(1)
+            this.ctx.fillStyle = '#B7C4CF'
+            this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+            this.ctx.fillStyle = '#AC7088'
+            this.ctx.font = '50px arial'
+            this.ctx.textAlign = "center"
+            this.ctx.fillText('YOU WIN!', this.canvasSize.w / 2, this.canvasSize.h / 2)
+        } else {
+
+        }
+    },
+
+    gameOver() {
+        clearInterval(1)
+        this.ctx.fillStyle = '#B7C4CF'
+        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+        this.ctx.fillStyle = '#AC7088'
+        this.ctx.font = '50px arial'
+        this.ctx.textAlign = "center"
+        this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
+    }
 
 }

@@ -16,9 +16,10 @@ class Player {
         }
         this.playerPhysics = { gravity: 0.4 }
         this.floor = this.canvasSize.h - this.playerSize.h
+        this.directionLeft = false
         this.image = new Image()
-        this.image.src = "../images/item.png"
-        // this.bullets = []; // new
+        this.image.src = "../images/player.png"
+        this.bullets = []
         this.init()
     }
     init() {
@@ -28,6 +29,8 @@ class Player {
     drawPlayer() {
         this.ctx.drawImage(this.image, this.playerPos.x, this.playerPos.y, this.playerSize.w, this.playerSize.h)
         this.setGravity()
+        this.bullets.forEach(elem => elem.drawBullets())
+        this.clearBullets()
     }
     moveLeft() {
         if (this.playerPos.x > 0) {
@@ -38,7 +41,6 @@ class Player {
         if (this.playerPos.x < this.canvasSize.w - this.playerSize.w) {
             this.playerPos.x += 20
         } else { }
-        // console.log(this.playerPos.x)
     }
     jump() {
         if (this.playerPos.y > this.floor) {
@@ -47,6 +49,19 @@ class Player {
         } else if ((this.playerPos.y -= (this.playerSize.h + 130))) {
             this.playerPos.y += 20
         }
+    }
+    shoot() {
+        this.bullets.push(new Bullets(
+            this.ctx,
+            this.canvasSize,
+            this.playerPos.x,
+            this.playerPos.y,
+            this.playerSize.w,
+            this.playerSize.h,
+            this.directionLeft));
+    }
+    clearBullets() {
+        this.bullets = this.bullets.filter(elem => elem.bulletPos.x <= this.canvasSize.w) //Memory
     }
     setGravity() {
         if (this.playerPos.y + this.playerSize.h < this.floor) {
@@ -62,16 +77,25 @@ class Player {
             switch (event.key) {
                 case 'ArrowLeft':
                     this.moveLeft()
-                    console.log('Arrow Left', this.playerPos.x)
+                    this.directionLeft = true
+                    // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.x}px`)
+                    // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;
                 case 'ArrowRight':
                     this.moveRigth()
-                    console.log('Arrow Right', this.playerPos.x)
+                    this.directionLeft = false
+                    // console.log('Arrow Right', `- PlayerPos.x = ${this.playerPos.x}px`)
+                    // console.log('Arrow Right', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;
                 case 'ArrowUp':
                     this.jump()
                     console.log('Jump')
                     break;
+                case 'z':
+                    this.shoot()
+                    console.log('Shoot', this.bullets)
+                    break;
+
             }
         }
     }
