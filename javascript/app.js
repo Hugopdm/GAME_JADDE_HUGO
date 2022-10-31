@@ -5,12 +5,15 @@ const app = {
     author: 'Jadde Suarez y Hugo Paniagua',
     description: 'Platform game',
     ctx: undefined,
+    //FPS: 60,
+    //framesCounter,
     background: undefined,
     player: undefined,
     platforms: [],
     items: [],
     enemies: [],
     score: 0,
+    lives: 3,
     canvasSize: {
         w: undefined,
         h: undefined
@@ -24,6 +27,7 @@ const app = {
         this.createItems()
         this.createEnemies()
         this.createPlayer()
+        this.drawScore()
         this.player.setEventHandlers()
         this.start()
     },
@@ -46,7 +50,7 @@ const app = {
     },
 
     createBackground() {
-        this.background = new Background(this.ctx, this.canvasSize)
+        this.background = new Background(this.ctx, this.canvasSize, this.score)
     },
 
     createPlatforms() {
@@ -98,8 +102,6 @@ const app = {
                 if (this.player.playerVel.y > 0) {
                     this.player.playerVel.y = 0
                 }
-            } else {
-
             }
         })
     },
@@ -112,10 +114,10 @@ const app = {
                 this.player.playerPos.y < elem.itemPos.y + elem.itemSize.h &&
                 this.player.playerSize.h + this.player.playerPos.y > elem.itemPos.y
             ) {
-                elem.itemPos.x += 1000
-                this.items = this.items.filter(elem => elem.itemPos.x < this.canvasSize.w)
+                let item = this.items.indexOf(elem)
+                this.items.splice(item, 1)
                 this.score++
-                // console.log(this.score)
+                // console.log('score = ', this.score)
             }
         })
     },
@@ -132,7 +134,10 @@ const app = {
                 this.player.playerPos.y < elem.enemyPos.y + elem.enemySize.h &&
                 this.player.playerSize.h + this.player.playerPos.y > elem.enemyPos.y
             ) {
-                this.gameOver()
+                this.player.playerPos.x = 50
+                this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
+                this.lives--
+                console.log(this.lives)
             }
         })
     },
@@ -151,26 +156,36 @@ const app = {
                     setTimeout(() => {
                         enemy.enemyVel = 3
                     }, 5000)
-                    bullet.bulletPos.x += 1000
+                    let elem = this.player.bullets.indexOf(bullet)
+                    this.player.bullets.splice(elem, 1)
                 }
             })
         })
     },
-
+    checkLives() {
+        if (this.lives === 0) {
+            this.gameOver()
+        }
+    },
+    drawLives() {
+        this.ctx.fillStyle = 'black'
+        this.ctx.font = '30px arial'
+        this.ctx.fillText(this.lives, this.canvasSize.w - 150, 35)
+    },
+    drawScore() {
+        this.ctx.fillStyle = 'black'
+        this.ctx.font = '30px arial'
+        this.ctx.fillText(this.score, this.canvasSize.w - 60, 35)
+    },
     start() {
         setInterval(() => {
-            // this.framesCounter++
-            // if (this.framesCounter % 35 === 0) {
-            //     this.createObstacle()
-            //     this.scoreCouter++
-            // }
             this.clearAll()
-            // this.moveAll()
             this.drawAll()
             this.checkCollisionPlatforms()
             this.checkCollisionItems()
             this.checkCollisionEnemiesPlayers()
             this.checkCollisionBulletsEnemies()
+            this.checkLives()
             this.winGame()
         }, 20)
 
@@ -192,6 +207,8 @@ const app = {
             elem.drawEnemies()
         })
         this.player.drawPlayer()
+        this.drawScore()
+        this.drawLives()
     },
 
     winGame() {

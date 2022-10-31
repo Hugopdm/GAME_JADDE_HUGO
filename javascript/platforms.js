@@ -15,7 +15,7 @@ class Platforms {
 
     init() {
         this.drawPlatform()
-
+        
     }
     drawPlatform() {
         this.ctx.fillStyle = '#BCE29E'

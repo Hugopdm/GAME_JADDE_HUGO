@@ -6,21 +6,21 @@ MVP
 ✅ Player jump on platforms
 ✅ Player shoot on enemies (enemies freeze for 5 secs)
 ✅ Check collision Player/Enemy = Game Over
-❌ Score
+✅ Score
 
 
 deBUG MVP
 ❌ Player Jump smoothness
 ❌ Player double jump disable
-❌ Player jump outside canvas
-❌ Player shoot both sides
-❌ Check collision Player/Platform-bottom
+✅ Player jump outside canvas
+✅ Player shoot both sides
 
 BONUS
 ❌ Lives
 ❌ Time
-❌ Diferent enemies motion
+❌ Random enemies motion
 ❌ Check Collision Bullet/Enemy (change enemy image)
+❌ Check collision Player/Platform-bottom
 ❌ Animation on Player death
 ❌ Player shoot spacebar
 ❌ Move & Shoot at the same time
