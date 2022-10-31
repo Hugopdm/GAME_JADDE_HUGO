@@ -19,8 +19,8 @@ class Player {
         this.directLeft = false
         this.image = new Image()
         this.image.src = "../images/mario.png"
-        // this.image.frames = 3     
-        // this.image.framesIndex = 0  
+        this.image.frames = 3
+        this.image.framesIndex = 0
         this.bullets = []
         this.init()
     }
@@ -32,27 +32,27 @@ class Player {
         this.checkTop()
         this.ctx.drawImage(
             this.image,
-            // this.image.framesIndex * (this.image.width / this.image.frames),
-            //     0, 
-            // this.image.width / this.image.frames
-            // this.image.heigth
+            this.image.framesIndex * (this.image.width / this.image.frames),
+            0,
+            this.image.width / this.image.frames,
+            this.image.height,
             this.playerPos.x,
             this.playerPos.y,
             this.playerSize.w,
             this.playerSize.h)
-        //this.animate(framesCounter)
+        this.animate(framesCounter)
         this.setGravity()
         this.bullets.forEach(elem => elem.drawBullets())
         this.clearBullets()
     }
-    // animate(framesCounter) {
-    //     if (framesCounter % 5 == 0) {
-    //         this.image.framesIndex++;
-    //     }
-    //     if (this.image.framesIndex >= this.image.frames) {
-    //         this.image.framesIndex = 0;
-    //     }
-    // }
+    animate(framesCounter) {
+        if (framesCounter % 5 == 0) {
+            this.image.framesIndex++;
+        }
+        if (this.image.framesIndex >= this.image.frames) {
+            this.image.framesIndex = 0;
+        }
+    }
     moveLeft() {
         if (this.playerPos.x > 0) {
             this.playerPos.x -= 20
@@ -95,10 +95,10 @@ class Player {
         if (this.playerPos.y + this.playerSize.h < this.floor) {
             this.playerPos.y += this.playerVel.y
             this.playerVel.y += this.playerPhysics.gravity
-            // this.playerPos.x += this.playerVel.x
+            //this.playerPos.x += this.playerVel.x
         } else {
             this.playerPos.y = this.floor
-            this.playerVel.y = 0
+            this.playerVel.y = 1
         }
     }
     setEventHandlers() {

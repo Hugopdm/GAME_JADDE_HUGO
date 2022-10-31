@@ -10,7 +10,7 @@ class Enemies {
             w: 50,
             h: 50
         }
-        this.enemyVel = 3
+        this.enemyVel = Math.floor(Math.random() * 4 + 2);
         this.enemyMinPosX = enemyMinPosX
         this.enemyMaxPosX = enemyMaxPosX
         this.image = new Image()

@@ -5,8 +5,8 @@ const app = {
     author: 'Jadde Suarez y Hugo Paniagua',
     description: 'Platform game',
     ctx: undefined,
-    //FPS: 60,
-    //framesCounter,
+    FPS: 60,
+    framesCounter: 0,
     background: undefined,
     player: undefined,
     platforms: [],
@@ -92,6 +92,7 @@ const app = {
 
     checkCollisionPlatforms() {
         this.platforms.forEach((elem) => {
+            // Works
             if (
                 this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
                 this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
@@ -103,7 +104,40 @@ const app = {
                     this.player.playerVel.y = 0
                 }
             }
+
+
+            //Try
+            // if (this.player.playerPos.y > elem.platformPos.y - elem.platformSize.h) {
+            //     this.player.playerVel.y = 0
+            //     this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
+            // }
+            // else if (
+            //     this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
+            //     this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
+            //     this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
+            //     this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
+            // ) {
+            //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
+            //     if (this.player.playerVel.y > 0) {
+            //         this.player.playerVel.y = 0
+            //     }
+            // }
+
+            // Try 
+            // if (this.player.playerPos.y > elem.platformPos.y - elem.platformSize.h) {
+            //     this.player.playerVel.y = 0
+            //     this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
+            // }
+
+            //Try
+            // if (this.player.playerPos.y + this.player.playerSize.h <= elem.platformPos.y) {
+            //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
+            //     if (this.player.playerVel.y > 0) {
+            //         this.player.playerVel.y = 0
+            //     }
+            // }
         })
+
     },
 
     checkCollisionItems() {
@@ -178,7 +212,8 @@ const app = {
         this.ctx.fillText(this.score, this.canvasSize.w - 60, 35)
     },
     start() {
-        setInterval(() => {
+        this.interval = setInterval(() => {
+            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             this.clearAll()
             this.drawAll()
             this.checkCollisionPlatforms()
@@ -206,7 +241,7 @@ const app = {
         this.enemies.forEach((elem) => {
             elem.drawEnemies()
         })
-        this.player.drawPlayer()
+        this.player.drawPlayer(this.framesCounter)
         this.drawScore()
         this.drawLives()
     },
