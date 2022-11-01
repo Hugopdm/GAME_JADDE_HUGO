@@ -14,7 +14,7 @@ class Enemies {
         this.enemyMinPosX = enemyMinPosX
         this.enemyMaxPosX = enemyMaxPosX
         this.image = new Image()
-        this.image.src = "../images/enemy.png"
+        this.image.src = "./images/enemy.png"
         this.init()
     }
     init() {

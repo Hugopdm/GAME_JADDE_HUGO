@@ -17,7 +17,7 @@ class Bullets {
         }
         this.bulletVel = 7
         this.image = new Image()
-        this.image.src = "../images/item.png"
+        this.image.src = "./images/item.png"
         this.init()
     }
     init() {

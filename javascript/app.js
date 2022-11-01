@@ -102,6 +102,7 @@ const app = {
                 this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
                 if (this.player.playerVel.y > 0) {
                     this.player.playerVel.y = 0
+                    this.player.canJump = true
                 }
             }
 
@@ -171,7 +172,7 @@ const app = {
                 this.player.playerPos.x = 50
                 this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
                 this.lives--
-                console.log(this.lives)
+                // console.log(this.lives)
             }
         })
     },
@@ -216,6 +217,12 @@ const app = {
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             this.clearAll()
             this.drawAll()
+            if (this.player.pressed.left === true) {
+                this.player.moveLeft()
+            }
+            if (this.player.pressed.rigth === true) {
+                this.player.moveRigth()
+            }
             this.checkCollisionPlatforms()
             this.checkCollisionItems()
             this.checkCollisionEnemiesPlayers()

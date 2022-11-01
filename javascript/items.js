@@ -11,7 +11,7 @@ class Items {
             h: 25
         }
         this.image = new Image()
-        this.image.src = "../images/item.png"
+        this.image.src = "./images/item.png"
         this.init()
     }
 

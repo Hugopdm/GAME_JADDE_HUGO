@@ -9,11 +9,11 @@ class Background {
         }
 
         this.backgroundImage = new Image()
-        this.backgroundImage.src = '../images/background.png'
+        this.backgroundImage.src = './images/background.png'
         this.scoreImage = new Image()
-        this.scoreImage.src = '../images/item.png'
+        this.scoreImage.src = './images/item.png'
         this.livesImage = new Image()
-        this.livesImage.src = '../images/heart.png'
+        this.livesImage.src = './images/heart.png'
     }
 
     drawBackground() {

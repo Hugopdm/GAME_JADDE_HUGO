@@ -10,15 +10,28 @@ class Player {
             x: 50,
             y: this.canvasSize.h - this.playerSize.h
         }
+        this.playerPos.y0 = this.playerPos.y
         this.playerVel = {
-            x: 1,
+            x: 10,
             y: 2
         }
+        this.key = {
+            left: 'ArrowLeft',
+            rigth: 'ArrowRight',
+            jump: 'ArrowUp',
+            shoot: 'z'
+        }
+        this.pressed = {
+            left: false,
+            rigth: false,
+            jump: false
+        }
+        this.canJump = true
         this.playerPhysics = { gravity: 0.4 }
         this.floor = this.canvasSize.h - this.playerSize.h
         this.directLeft = false
         this.image = new Image()
-        this.image.src = "../images/mario.png"
+        this.image.src = "./images/mario.png"
         this.image.frames = 3
         this.image.framesIndex = 0
         this.bullets = []
@@ -55,12 +68,12 @@ class Player {
     }
     moveLeft() {
         if (this.playerPos.x > 0) {
-            this.playerPos.x -= 20
+            this.playerPos.x -= 5
         } else { }
     }
     moveRigth() {
         if (this.playerPos.x < this.canvasSize.w - this.playerSize.w) {
-            this.playerPos.x += 20
+            this.playerPos.x += 5
         } else { }
     }
     checkTop() {
@@ -70,11 +83,10 @@ class Player {
         }
     }
     jump() {
-        if (this.playerPos.y > this.floor) {
-            this.playerPos.y -= 20
-            this.playerVel.y -= 3
-        } else if ((this.playerPos.y -= (this.playerSize.h + 115))) {
-            this.playerPos.y += 20
+        if (this.canJump) {
+            this.playerVel.y = -10
+            this.playerPos.y -= 5
+            this.canJump = false
         }
     }
     shoot() {
@@ -92,39 +104,52 @@ class Player {
         this.bullets = this.bullets.filter(elem => elem.bulletPos.x <= this.canvasSize.w) //Memory
     }
     setGravity() {
-        if (this.playerPos.y + this.playerSize.h < this.floor) {
+        if (this.playerPos.y < this.floor) {
             this.playerPos.y += this.playerVel.y
             this.playerVel.y += this.playerPhysics.gravity
-            //this.playerPos.x += this.playerVel.x
         } else {
             this.playerPos.y = this.floor
             this.playerVel.y = 1
+            this.canJump = true
         }
     }
     setEventHandlers() {
         document.onkeydown = event => {
             switch (event.key) {
-                case 'ArrowLeft':
-                    this.moveLeft()
+                case this.key.left:
+                    this.pressed.left = true
                     this.directLeft = true
                     // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.x}px`)
                     // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;
-                case 'ArrowRight':
-                    this.moveRigth()
+                case this.key.rigth:
+                    this.pressed.rigth = true
                     this.directLeft = false
                     // console.log('Arrow Right', `- PlayerPos.x = ${this.playerPos.x}px`)
                     // console.log('Arrow Right', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;
-                case 'ArrowUp':
+                case this.key.jump:
+                    this.pressed.jump = true
                     this.jump()
-                    console.log('Jump')
+                    // console.log('Jump')
                     break;
-                case 'z':
+                case this.key.shoot:
                     this.shoot()
-                    console.log('Shoot', this.bullets)
+                    // console.log('Shoot', this.bullets)
                     break;
-
+            }
+        }
+        document.onkeyup = event => {
+            switch (event.key) {
+                case this.key.left:
+                    this.pressed.left = false
+                    break;
+                case this.key.rigth:
+                    this.pressed.rigth = false
+                    break;
+                case this.key.jump:
+                    this.pressed.jump = false
+                    break;
             }
         }
     }
