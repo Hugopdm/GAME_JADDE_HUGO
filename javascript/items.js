@@ -11,7 +11,9 @@ class Items {
             h: 25
         }
         this.image = new Image()
-        this.image.src = "./images/item.png"
+        this.image.src = "./images/coin_animated.png"
+        //this.frames = 4
+        //this.image.framesIndex = 0
         this.init()
     }
 
@@ -20,5 +22,14 @@ class Items {
     }
     drawItems() {
         this.ctx.drawImage(this.image, this.itemPos.x, this.itemPos.y, this.itemSize.w, this.itemSize.h)
+        //this.animate(framesCounter)
     }
+    // animate(framesCounter) {
+    //     if (framesCounter % 5 == 0) {
+    //         this.image.framesIndex++;
+    //     }
+    //     if (this.image.framesIndex >= this.image.frames) {
+    //         this.image.framesIndex = 0;
+    //     }
+    // }
 }

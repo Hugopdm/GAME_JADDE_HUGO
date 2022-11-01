@@ -84,7 +84,7 @@ class Player {
     }
     jump() {
         if (this.canJump) {
-            this.playerVel.y = -10
+            this.playerVel.y = -12
             this.playerPos.y -= 5
             this.canJump = false
         }
@@ -114,11 +114,13 @@ class Player {
         }
     }
     setEventHandlers() {
+        event.preventDefault()
         document.onkeydown = event => {
             switch (event.key) {
                 case this.key.left:
                     this.pressed.left = true
                     this.directLeft = true
+                    console.log(this.playerPos.y)
                     // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.x}px`)
                     // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;

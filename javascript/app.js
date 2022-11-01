@@ -92,23 +92,27 @@ const app = {
 
     checkCollisionPlatforms() {
         this.platforms.forEach((elem) => {
-            // Works
-            if (
-                this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
-                this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
-                this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
-                this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
-            ) {
-                this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
-                if (this.player.playerVel.y > 0) {
-                    this.player.playerVel.y = 0
-                    this.player.canJump = true
-                }
-            }
+            // Works without bottom collision
+            // if (
+            //     this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
+            //     this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
+            //     this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
+            //     this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
+            // ) {
+            //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
+            //     if (this.player.playerVel.y > 0) {
+            //         this.player.playerVel.y = 0
+            //         this.player.canJump = true
+            //     }
+            // }
 
-
-            //Try
-            // if (this.player.playerPos.y > elem.platformPos.y - elem.platformSize.h) {
+            // Working on this one
+            // if (this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
+            //     this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
+            //     this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
+            //     this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
+            // ) {
+            //     console.log('holi')
             //     this.player.playerVel.y = 0
             //     this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
             // }
@@ -121,22 +125,28 @@ const app = {
             //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
             //     if (this.player.playerVel.y > 0) {
             //         this.player.playerVel.y = 0
+            //         this.player.canJump = true
             //     }
             // }
+            // Try
+            if (
+                this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
+                this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
+                this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
+                this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
+            ) {
+                console.log('holi')
+                this.player.playerVel.y = 0
+                this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
+                if (this.player.playerPos.y > elem.platformPos.y) {
+                    this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
+                    if (this.player.playerVel.y > 0) {
+                        this.player.playerVel.y = 0
+                        this.player.canJump = true
+                    }
+                }
+            }
 
-            // Try 
-            // if (this.player.playerPos.y > elem.platformPos.y - elem.platformSize.h) {
-            //     this.player.playerVel.y = 0
-            //     this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
-            // }
-
-            //Try
-            // if (this.player.playerPos.y + this.player.playerSize.h <= elem.platformPos.y) {
-            //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
-            //     if (this.player.playerVel.y > 0) {
-            //         this.player.playerVel.y = 0
-            //     }
-            // }
         })
 
     },
