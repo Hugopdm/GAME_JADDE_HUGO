@@ -136,17 +136,18 @@ const app = {
                 this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
             ) {
                 console.log('holi')
-                this.player.playerVel.y = 0
-                this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
-                if (this.player.playerPos.y > elem.platformPos.y) {
+                if (this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h) {
+                    this.player.playerVel.y = 0
+                    this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
+                }
+                if (this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y) {
                     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
-                    if (this.player.playerVel.y > 0) {
-                        this.player.playerVel.y = 0
-                        this.player.canJump = true
-                    }
+                    this.player.canJump = true
+                    // if (this.player.playerVel.y > 0) {
+                    //     this.player.playerVel.y = 0
+                    // }
                 }
             }
-
         })
 
     },
@@ -179,8 +180,13 @@ const app = {
                 this.player.playerPos.y < elem.enemyPos.y + elem.enemySize.h &&
                 this.player.playerSize.h + this.player.playerPos.y > elem.enemyPos.y
             ) {
-                this.player.playerPos.x = 50
-                this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
+                this.player.playerPos.y -= 100
+                setTimeout(() => {
+                    this.player.playerPos.x = 50
+                    this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
+                }, 200)
+                // this.player.playerPos.x = 50
+                // this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
                 this.lives--
                 // console.log(this.lives)
             }

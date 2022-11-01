@@ -19,7 +19,7 @@ class Player {
             left: 'ArrowLeft',
             rigth: 'ArrowRight',
             jump: 'ArrowUp',
-            shoot: 'z'
+            shoot: ' '
         }
         this.pressed = {
             left: false,
@@ -136,6 +136,7 @@ class Player {
                     // console.log('Jump')
                     break;
                 case this.key.shoot:
+                    event.preventDefault()
                     this.shoot()
                     // console.log('Shoot', this.bullets)
                     break;

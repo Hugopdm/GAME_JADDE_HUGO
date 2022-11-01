@@ -12,9 +12,9 @@ MVP
 
 
 deBUG MVP
-❌ Player Jump smoothness
-❌ Player double jump disable
-❌ Player shoot spacebar
+✅ Player Jump smoothness
+✅ Player double jump disable
+✅ Player shoot spacebar
 ❌ Check collision Player/Platform-bottom
 ✅ Player jump outside canvas
 ✅ Player shoot both sides
@@ -25,6 +25,6 @@ BONUS
 ✅ Random enemies motion
 ❌ Check Collision Bullet/Enemy (change enemy image)
 ❌ Animation on Player death
-❌ Move & Shoot at the same time
+✅ Move & Shoot at the same time
 ❌ Sprites
 ❌ Sounds
