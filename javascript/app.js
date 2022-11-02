@@ -92,62 +92,26 @@ const app = {
 
     checkCollisionPlatforms() {
         this.platforms.forEach((elem) => {
-            // Works without bottom collision
-            // if (
-            //     this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
-            //     this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
-            //     this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
-            //     this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
-            // ) {
-            //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
-            //     if (this.player.playerVel.y > 0) {
-            //         this.player.playerVel.y = 0
-            //         this.player.canJump = true
-            //     }
-            // }
-
-            // Working on this one
-            // if (this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
-            //     this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
-            //     this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
-            //     this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
-            // ) {
-            //     console.log('holi')
-            //     this.player.playerVel.y = 0
-            //     this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
-            // }
-            // else if (
-            //     this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
-            //     this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
-            //     this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
-            //     this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
-            // ) {
-            //     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
-            //     if (this.player.playerVel.y > 0) {
-            //         this.player.playerVel.y = 0
-            //         this.player.canJump = true
-            //     }
-            // }
-            // Try
+            // YAY
             if (
                 this.player.playerPos.x < elem.platformPos.x + elem.platformSize.w &&
                 this.player.playerPos.x + this.player.playerSize.w > elem.platformPos.x &&
                 this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h &&
                 this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y
             ) {
-                console.log('holi')
-                if (this.player.playerPos.y < elem.platformPos.y + elem.platformSize.h) {
-                    this.player.playerVel.y = 0
-                    this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
-                }
-                if (this.player.playerSize.h + this.player.playerPos.y > elem.platformPos.y) {
+
+                if (this.player.playerVel.y > 0) {
                     this.player.playerPos.y = elem.platformPos.y - this.player.playerSize.h
+                    this.player.playerVel.y = 0
                     this.player.canJump = true
-                    // if (this.player.playerVel.y > 0) {
-                    //     this.player.playerVel.y = 0
-                    // }
+                }
+
+                if (this.player.playerVel.y < 0) {
+                    this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h + 5
+                    this.player.playerVel.y = 0
                 }
             }
+
         })
 
     },
@@ -259,7 +223,7 @@ const app = {
             elem.drawPlatform()
         })
         this.items.forEach((elem) => {
-            elem.drawItems()
+            elem.drawItems(this.framesCounter)
         })
         this.enemies.forEach((elem) => {
             elem.drawEnemies()

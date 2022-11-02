@@ -53,7 +53,9 @@ class Player {
             this.playerPos.y,
             this.playerSize.w,
             this.playerSize.h)
-        this.animate(framesCounter)
+        if (this.pressed.left === true || this.pressed.rigth === true) {
+            this.animate(framesCounter)
+        }
         this.setGravity()
         this.bullets.forEach(elem => elem.drawBullets())
         this.clearBullets()
@@ -120,13 +122,14 @@ class Player {
                 case this.key.left:
                     this.pressed.left = true
                     this.directLeft = true
-                    console.log(this.playerPos.y)
+                    // console.log(this.playerPos.y)
                     // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.x}px`)
                     // console.log('Arrow Left', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;
                 case this.key.rigth:
                     this.pressed.rigth = true
                     this.directLeft = false
+                    // this.animate(framesCounter)
                     // console.log('Arrow Right', `- PlayerPos.x = ${this.playerPos.x}px`)
                     // console.log('Arrow Right', `- PlayerPos.x = ${this.playerPos.y}px`)
                     break;
