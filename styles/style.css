@@ -4,6 +4,15 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+    background: #fde4ba;
+}
+
+#game-board {
+    padding: 0;
+    border: 20px solid #ffd691;
+}
+
 img {
     width: 100%;
 }

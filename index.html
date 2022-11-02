@@ -12,25 +12,35 @@
   <header class="nav-bar"></header>
 <section class="section container">
   <div class="row flex-nowrap">
-    <div class="game-intro col d-flex justify-content-around align-items-center">
-      <div></div>
-      <div class="button">
-      <button class="btn btn-danger my-2 p-3 text-uppercase" id="start-button">Start Game</button>
+
+     <div id="game-board" class="col">
+      <div id="game-over">
+        <img src="" alt="">
       </div>
-      <div></div> 
+      <div id="win-game">
+        <img src="./images/youn win.png" alt="">
+      </div>
+      <div>
+        <canvas id="canvas" width="800" height="600"></canvas>
+      </div>
     </div>
 
-   <div id="game-board" class="col">
-    <div id="game-over">
-  <img src="" alt="">
-</div>
-<div id="win-game">
-  <img src="pistockphoto-1307986275-170667a.jpg" alt="">
-</div>
-    <canvas id="canvas" width="800" height="600"></canvas>
-   </div>
 
-    <div class="col"></div>
+    <div class="game-intro col d-flex align-items-center ml-5">
+      <div class="flex-wrap d-flex justify-content-center">
+        <div>
+          <img src="./images/cover.png" alt="">
+        </div>
+        <div class="button">
+          <button class="btn btn-danger my-2 p-3 text-uppercase" id="start-button">Start Game</button>
+        </div>
+        <div>
+          <p>how to play</p>
+        </div> 
+      </div>
+    </div>
+
+   
   </div>
 </section>
 

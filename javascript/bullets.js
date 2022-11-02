@@ -12,12 +12,12 @@ class Bullets {
             this.bulletPos.x = this.playerPosX
         }
         this.bulletSize = {
-            w: 10,
-            h: 10
+            w: 30,
+            h: 14
         }
         this.bulletVel = 7
         this.image = new Image()
-        this.image.src = "./images/item.png"
+        this.image.src = "./images/feather.png"
         this.init()
     }
     init() {
