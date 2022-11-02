@@ -13,3 +13,18 @@ img {
     background-color: white;
     margin-bottom: 50px;
 }
+
+#game-over {
+    display: none;
+    position: fixed;
+    width: 800px;
+    height: 600px;
+    /* background-color: black; */
+    background-image: url("pistockphoto-1307986275-170667a.jpg");
+
+}
+
+#win-game {
+    display: none;
+    background-color: black;
+}

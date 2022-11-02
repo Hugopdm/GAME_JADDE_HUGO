@@ -3,8 +3,8 @@ class Player {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.playerSize = {
-            w: 50,
-            h: 70
+            w: 52,
+            h: 52
         }
         this.playerPos = {
             x: 50,
@@ -31,8 +31,8 @@ class Player {
         this.floor = this.canvasSize.h - this.playerSize.h
         this.directLeft = false
         this.image = new Image()
-        this.image.src = "./images/mario.png"
-        this.image.frames = 3
+        this.image.src = "./images/duckfront_(36x36).png"
+        this.image.frames = 10
         this.image.framesIndex = 0
         this.bullets = []
         this.init()
@@ -53,6 +53,12 @@ class Player {
             this.playerPos.y,
             this.playerSize.w,
             this.playerSize.h)
+        if (this.pressed.rigth === true) {
+            this.image.src = "./images/duckfront_(36x36).png"
+        }
+        if (this.pressed.left === true) {
+            this.image.src = "./images/duckback_(36x36).png"
+        }
         if (this.pressed.left === true || this.pressed.rigth === true) {
             this.animate(framesCounter)
         }
@@ -61,7 +67,7 @@ class Player {
         this.clearBullets()
     }
     animate(framesCounter) {
-        if (framesCounter % 5 == 0) {
+        if (framesCounter % 2 == 0) {
             this.image.framesIndex++;
         }
         if (this.image.framesIndex >= this.image.frames) {

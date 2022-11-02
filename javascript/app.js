@@ -65,28 +65,28 @@ const app = {
 
     createItems() {
         this.items.push(
-            new Items(this.ctx, this.canvasSize, 25, this.canvasSize.h / 4 - 35), // platform 1 - item 1
-            new Items(this.ctx, this.canvasSize, 120, this.canvasSize.h / 4 - 35), // platform 1 - item 2
-            new Items(this.ctx, this.canvasSize, 225, this.canvasSize.h / 4 - 35), // platform 1 - item 3
+            new Items(this.ctx, this.canvasSize, 25, this.canvasSize.h / 4 - 50), // platform 1 - item 1
+            new Items(this.ctx, this.canvasSize, 120, this.canvasSize.h / 4 - 50), // platform 1 - item 2
+            new Items(this.ctx, this.canvasSize, 225, this.canvasSize.h / 4 - 50), // platform 1 - item 3
 
-            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 355, this.canvasSize.h / 4 + 15), // platform 2 - item 4
-            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 230, this.canvasSize.h / 4 + 15), // platform 2 - item 5
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 355, this.canvasSize.h / 4 + 5), // platform 2 - item 4
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 230, this.canvasSize.h / 4 + 5), // platform 2 - item 5
 
-            new Items(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 75, this.canvasSize.h / 2 - 5), // platform 3 - item 6
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 75, this.canvasSize.h / 2 - 20), // platform 3 - item 6
 
-            new Items(this.ctx, this.canvasSize, 50, (this.canvasSize.h / 4) + (this.canvasSize.h / 2) - 25), // platform 4 - item 7
-            new Items(this.ctx, this.canvasSize, 125, (this.canvasSize.h / 4) + (this.canvasSize.h / 2) - 25), // platform 4 - item 8
+            new Items(this.ctx, this.canvasSize, 50, (this.canvasSize.h / 4) + (this.canvasSize.h / 2) - 40), // platform 4 - item 7
+            new Items(this.ctx, this.canvasSize, 125, (this.canvasSize.h / 4) + (this.canvasSize.h / 2) - 40), // platform 4 - item 8
 
-            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 200, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2) - 25),// platform 5 - item 9
-            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 75, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2) - 25)// platform 5 - item 10
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 200, (this.canvasSize.h / 4 - 65) + (this.canvasSize.h / 2) - 25),// platform 5 - item 9
+            new Items(this.ctx, this.canvasSize, this.canvasSize.w - 75, (this.canvasSize.h / 4 - 65) + (this.canvasSize.h / 2) - 25)// platform 5 - item 10
         )
     },
 
     createEnemies() {
         this.enemies.push(
-            new Enemies(this.ctx, this.canvasSize, 50, 140 - 50, 50, 230), // platform 1 - enemy 1
-            new Enemies(this.ctx, this.canvasSize, 570, 400 - 50, 570, 730), // platform 5 - enemy 2
-            new Enemies(this.ctx, this.canvasSize, 230, this.canvasSize.h - 50, 230, 700) //Floor - enemy 3
+            new Enemies(this.ctx, this.canvasSize, 50, 140 - 44, 50, 230), // platform 1 - enemy 1
+            new Enemies(this.ctx, this.canvasSize, 570, 400 - 44, 570, 730), // platform 5 - enemy 2
+            new Enemies(this.ctx, this.canvasSize, 230, this.canvasSize.h - 44, 230, 700) //Floor - enemy 3
         )
     },
 
@@ -107,7 +107,7 @@ const app = {
                 }
 
                 if (this.player.playerVel.y < 0) {
-                    this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h + 5
+                    this.player.playerPos.y = elem.platformPos.y + elem.platformSize.h
                     this.player.playerVel.y = 0
                 }
             }
@@ -144,11 +144,8 @@ const app = {
                 this.player.playerPos.y < elem.enemyPos.y + elem.enemySize.h &&
                 this.player.playerSize.h + this.player.playerPos.y > elem.enemyPos.y
             ) {
-                this.player.playerPos.y -= 100
-                setTimeout(() => {
-                    this.player.playerPos.x = 50
-                    this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
-                }, 200)
+                this.player.playerPos.x = 50
+                this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
                 // this.player.playerPos.x = 50
                 // this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
                 this.lives--
@@ -222,11 +219,12 @@ const app = {
         this.platforms.forEach((elem) => {
             elem.drawPlatform()
         })
+        this.enemies.forEach((elem) => {
+            elem.drawEnemies(this.framesCounter)
+        })
         this.items.forEach((elem) => {
             elem.drawItems(this.framesCounter)
-        })
-        this.enemies.forEach((elem) => {
-            elem.drawEnemies()
+
         })
         this.player.drawPlayer(this.framesCounter)
         this.drawScore()
@@ -249,12 +247,13 @@ const app = {
 
     gameOver() {
         clearInterval(1)
-        this.ctx.fillStyle = '#B7C4CF'
-        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-        this.ctx.fillStyle = '#AC7088'
-        this.ctx.font = '50px arial'
-        this.ctx.textAlign = "center"
-        this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
+        // this.ctx.fillStyle = '#B7C4CF'
+        // this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+        // this.ctx.fillStyle = '#AC7088'
+        // this.ctx.font = '50px arial'
+        // this.ctx.textAlign = "center"
+        // this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
+        document.querySelector('#game-over').style.display = 'block'
     }
 
 }
