@@ -1,4 +1,4 @@
-# GAME_JADDE_HUGO
+# GAME_DUCK_VS_SLIME
 MVP
 ✅ Platforms
 ✅ Pick up all items to win
@@ -15,16 +15,13 @@ deBUG MVP
 ✅ Player Jump smoothness
 ✅ Player double jump disable
 ✅ Player shoot spacebar
-❌ Check collision Player/Platform-bottom
+✅ Check collision Player/Platform-bottom
 ✅ Player jump outside canvas
 ✅ Player shoot both sides
 
 BONUS
 ✅ Lives
-❌ Time
 ✅ Random enemies motion
-❌ Check Collision Bullet/Enemy (change enemy image)
-❌ Animation on Player death
 ✅ Move & Shoot at the same time
-❌ Sprites
-❌ Sounds
+✅ Sprites
+✅ Sounds
