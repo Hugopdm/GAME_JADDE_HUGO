@@ -26,6 +26,7 @@ class Player {
             rigth: false,
             jump: false
         }
+        this.shootTrack = new Audio("./songs/quack.mp3")
         this.canJump = true
         this.playerPhysics = { gravity: 0.4 }
         this.floor = this.canvasSize.h - this.playerSize.h
@@ -107,9 +108,7 @@ class Player {
             this.playerSize.h,
             this.directLeft
         ))
-
-        let shoottrack = new Audio("./songs/quack.mp3")
-        shoottrack.play()
+        this.shootTrack.play()
     }
     clearBullets() {
         this.bullets = this.bullets.filter(elem => elem.bulletPos.x <= this.canvasSize.w) //Memory

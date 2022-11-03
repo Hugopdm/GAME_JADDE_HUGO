@@ -9,15 +9,20 @@ img {
 }
 
 body {
-    /* background: #fde4ba; */
-    background-image: url("../images/backgroung_page.jpg");
+    background-image: url("../images/backgroung_page - Editado.png");
     background-size: 100%;
 }
 
 #game-board {
-    margin: 0;
-    padding: 7px 7px 0 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+canvas {
     border: 20px solid #ffd691;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .nav-bar {
@@ -29,6 +34,13 @@ body {
 .button {
     display: flex;
     justify-content: center;
+}
+
+.btn {
+    font-family: "Comic Sans MS";
+    width: 80%;
+    letter-spacing: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .logo {
@@ -46,7 +58,7 @@ body {
 }
 
 .how-to-play img {
-    width: 60%;
+    width: 85%;
 }
 
 #game-over {

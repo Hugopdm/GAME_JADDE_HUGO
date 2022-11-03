@@ -14,6 +14,10 @@ const app = {
     enemies: [],
     score: 0,
     lives: 3,
+    backgroundTrack: new Audio("./songs/backgroundTrack.mp3"),
+    enemyTrack: new Audio("./songs/Buzzer.mp3"),
+    winGameTrack: new Audio("./songs/Applause.mp3"),
+    gameOverTrack: new Audio("./songs/Sad Violin.mp3"),
     canvasSize: {
         w: undefined,
         h: undefined
@@ -29,8 +33,8 @@ const app = {
         this.createPlayer()
         this.drawScore()
         this.player.setEventHandlers()
+        this.backgroundTrack.play()
         this.start()
-
     },
 
     setDimensions() {
@@ -85,7 +89,7 @@ const app = {
 
     createEnemies() {
         this.enemies.push(
-            new Enemies(this.ctx, this.canvasSize, 50, 140 - 44, 50, 230), // platform 1 - enemy 1
+            new Enemies(this.ctx, this.canvasSize, 50, 140 - 44, 10, 210), // platform 1 - enemy 1
             new Enemies(this.ctx, this.canvasSize, 570, 400 - 44, 570, 730), // platform 5 - enemy 2
             new Enemies(this.ctx, this.canvasSize, 230, this.canvasSize.h - 44, 230, 700) //Floor - enemy 3
         )
@@ -129,11 +133,10 @@ const app = {
                 this.items.splice(item, 1)
                 this.score++
                 // console.log('score = ', this.score)
-                let cointrack = new Audio("./songs/coin.wav")
-                cointrack.play()
+                let coinTrack = new Audio("./songs/coin.wav")
+                coinTrack.play()
             }
         })
-
 
     },
 
@@ -155,8 +158,7 @@ const app = {
                 // this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
                 this.lives--
                 // console.log(this.lives)
-                let touchEnemytrack = new Audio("./songs/bump.wav")
-                touchEnemytrack.play()
+                this.enemyTrack.play()
             }
         })
     },
@@ -242,6 +244,8 @@ const app = {
         if (this.score === 10) {
             clearInterval(1)
             document.querySelector('#win-game').style.display = 'block'
+            this.backgroundTrack.pause()
+            this.winGameTrack.play()
         } else {
 
         }
@@ -249,13 +253,9 @@ const app = {
 
     gameOver() {
         clearInterval(1)
-        // this.ctx.fillStyle = '#B7C4CF'
-        // this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-        // this.ctx.fillStyle = '#AC7088'
-        // this.ctx.font = '50px arial'
-        // this.ctx.textAlign = "center"
-        // this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
         document.querySelector('#game-over').style.display = 'block'
+        this.backgroundTrack.pause()
+        this.gameOverTrack.play()
     }
 
 }
