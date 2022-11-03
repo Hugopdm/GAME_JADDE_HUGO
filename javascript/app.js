@@ -30,6 +30,7 @@ const app = {
         this.drawScore()
         this.player.setEventHandlers()
         this.start()
+
     },
 
     setDimensions() {
@@ -55,11 +56,11 @@ const app = {
 
     createPlatforms() {
         this.platforms.push(
-            new Platforms(this.ctx, this.canvasSize, 0, this.canvasSize.h / 4 - 10, 280, 40), //platform 1 up-left
-            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 380, this.canvasSize.h / 4 + 40, 200, 40), //platform 2 up-right
-            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 130, this.canvasSize.h / 2 + 20, 130, 40), //platform 3 mid
-            new Platforms(this.ctx, this.canvasSize, 0, (this.canvasSize.h / 4) + (this.canvasSize.h / 2), 200, 40), //platform 4 bottom-left
-            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 250, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2), 250, 40) //platform 5 bottom-rigth
+            new Platforms(this.ctx, this.canvasSize, 0, this.canvasSize.h / 4 - 10, 280, 40, "./images/grass_8x1.png"), //platform 1 up-left
+            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 380, this.canvasSize.h / 4 + 40, 200, 40, "./images/grass_6x1.png"), //platform 2 up-right
+            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 130, this.canvasSize.h / 2 + 20, 130, 40, "./images/grass_4x1.png"), //platform 3 mid
+            new Platforms(this.ctx, this.canvasSize, 0, (this.canvasSize.h / 4) + (this.canvasSize.h / 2), 200, 40, "./images/grass_6x1.png"), //platform 4 bottom-left
+            new Platforms(this.ctx, this.canvasSize, this.canvasSize.w - 250, (this.canvasSize.h / 4 - 50) + (this.canvasSize.h / 2), 250, 40, "./images/grass_8x1.png") //platform 5 bottom-rigth
         )
     },
 
@@ -128,8 +129,12 @@ const app = {
                 this.items.splice(item, 1)
                 this.score++
                 // console.log('score = ', this.score)
+                let cointrack = new Audio("./songs/coin.wav")
+                cointrack.play()
             }
         })
+
+
     },
 
     checkCollisionEnemiesPlayers() {
@@ -150,6 +155,8 @@ const app = {
                 // this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
                 this.lives--
                 // console.log(this.lives)
+                let touchEnemytrack = new Audio("./songs/bump.wav")
+                touchEnemytrack.play()
             }
         })
     },
@@ -180,13 +187,13 @@ const app = {
         }
     },
     drawLives() {
-        this.ctx.fillStyle = 'black'
-        this.ctx.font = '30px arial'
-        this.ctx.fillText(this.lives, this.canvasSize.w - 150, 35)
+        this.ctx.fillStyle = '#794d1d'
+        this.ctx.font = '30px "Comic Sans MS"'
+        this.ctx.fillText(this.lives, this.canvasSize.w - 160, 35)
     },
     drawScore() {
-        this.ctx.fillStyle = 'black'
-        this.ctx.font = '30px arial'
+        this.ctx.fillStyle = '#794d1d'
+        this.ctx.font = '30px "Comic Sans MS"'
         this.ctx.fillText(this.score, this.canvasSize.w - 60, 35)
     },
     start() {
@@ -234,12 +241,7 @@ const app = {
     winGame() {
         if (this.score === 10) {
             clearInterval(1)
-            this.ctx.fillStyle = '#B7C4CF'
-            this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-            this.ctx.fillStyle = '#AC7088'
-            this.ctx.font = '50px arial'
-            this.ctx.textAlign = "center"
-            this.ctx.fillText('YOU WIN!', this.canvasSize.w / 2, this.canvasSize.h / 2)
+            document.querySelector('#win-game').style.display = 'block'
         } else {
 
         }

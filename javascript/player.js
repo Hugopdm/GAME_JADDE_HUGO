@@ -106,7 +106,10 @@ class Player {
             this.playerSize.w,
             this.playerSize.h,
             this.directLeft
-        ));
+        ))
+
+        let shoottrack = new Audio("./songs/quack.mp3")
+        shoottrack.play()
     }
     clearBullets() {
         this.bullets = this.bullets.filter(elem => elem.bulletPos.x <= this.canvasSize.w) //Memory

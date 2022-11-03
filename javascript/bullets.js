@@ -17,14 +17,24 @@ class Bullets {
         }
         this.bulletVel = 7
         this.image = new Image()
-        this.image.src = "./images/feather.png"
+        this.image.src = "./images/feather_front.png"
         this.init()
     }
     init() {
         this.drawBullets()
     }
     drawBullets() {
-        this.ctx.drawImage(this.image, this.bulletPos.x, this.bulletPos.y, this.bulletSize.w, this.bulletSize.h)
+        this.ctx.drawImage(
+            this.image,
+            this.bulletPos.x,
+            this.bulletPos.y,
+            this.bulletSize.w,
+            this.bulletSize.h)
+        if (this.directLeft) {
+            this.image.src = "./images/feather_back.png"
+        } else {
+            this.image.src = "./images/feather_front.png"
+        }
         this.moveBullets()
     }
     moveBullets() {

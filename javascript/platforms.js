@@ -1,5 +1,5 @@
 class Platforms {
-    constructor(ctx, canvasSize, platformPosX, platformPosY, platformSizeW, platformSizeH) {
+    constructor(ctx, canvasSize, platformPosX, platformPosY, platformSizeW, platformSizeH, platformImage) {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.platformPos = {
@@ -10,15 +10,21 @@ class Platforms {
             w: platformSizeW,
             h: platformSizeH
         }
+        this.image = new Image()
+        this.image.src = platformImage
         this.init()
     }
 
     init() {
         this.drawPlatform()
-        
+
     }
     drawPlatform() {
-        this.ctx.fillStyle = '#BCE29E'
-        this.ctx.fillRect(this.platformPos.x, this.platformPos.y, this.platformSize.w, this.platformSize.h)
+        this.ctx.drawImage(
+            this.image,
+            this.platformPos.x,
+            this.platformPos.y,
+            this.platformSize.w,
+            this.platformSize.h)
     }
 }

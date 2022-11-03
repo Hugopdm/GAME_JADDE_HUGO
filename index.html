@@ -15,28 +15,29 @@
 
      <div id="game-board" class="col">
       <div id="game-over">
-        <img src="" alt="">
+        <img src="./images/game_over.png" alt="game-over background">
       </div>
       <div id="win-game">
-        <img src="./images/youn win.png" alt="">
+        <img src="./images/you_win.png" alt="you-win background">
       </div>
-      <div>
         <canvas id="canvas" width="800" height="600"></canvas>
       </div>
-    </div>
 
 
-    <div class="game-intro col d-flex align-items-center ml-5">
-      <div class="flex-wrap d-flex justify-content-center">
-        <div>
+    <div class="game-intro col d-flex align-items-around ml-5">
+      <div class="flex-wrap row d-flex justify-content-around align-items-center">
+
+        <div class="button justify-content-center">
+          <button class="btn btn-success my-2 px-5 py-3 text-uppercase" id="start-button">Start Game</button>
+        </div> 
+        <div class="logo">
           <img src="./images/cover.png" alt="">
         </div>
-        <div class="button">
-          <button class="btn btn-danger my-2 p-3 text-uppercase" id="start-button">Start Game</button>
+        <div class="how-to-play">
+          <img src="./images/buttons.png" alt="">
         </div>
-        <div>
-          <p>how to play</p>
-        </div> 
+        
+        
       </div>
     </div>
 
